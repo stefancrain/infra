@@ -1,0 +1,8 @@
+threshold: medium
+fileignoreconfig:
+- filename: config/cloud_init/ubuntu/cloud_init.cfg
+  checksum: 09d32e6b7f71d2e637c84979adb2250044f692b63d8ef6d8d831ca5dfa5756da
+- filename: config/cloud_init/ubuntu/ssh_id_shared
+  checksum: b52444022a0b87f392d6c64e624044a685fdfa4c55318cfffa721dac4c81b986
+- filename: .github/lint/.yamllint.yml
+  checksum: 3c27abed0aaf960db5be4a7b0e3d350f7dcd1584a24a20614188de35e484a785
