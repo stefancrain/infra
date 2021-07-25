@@ -1,21 +1,42 @@
 variable "common_name" {
   description = "The common environment name to use for most resources."
-  default     = "vyos-demo"
+  default     = "Router"
 }
 variable "aws_region" {
   description = "The region to provision AWS resources in."
-  default     = "us-east-1"
+  default     = "us-west-2"
 }
-variable "aws_vpc_cidr_block" {
-  description = "The CIDR block to use for the AWS VPC."
+variable "aws_vpc_primary_cidr_block" {
+  description = "First CIDR block to use for the AWS VPC."
   default     = "10.0.0.0/16"
+}
+variable "aws_vpc_secondary_cidr_block" {
+  description = "Second CIDR block to use for the AWS VPC."
+  default     = "10.1.0.0/16"
+}
+variable "aws_vpc_tertiary_cidr_block" {
+  description = "Third CIDR block to use for the AWS VPC."
+  default     = "10.2.0.0/16"
 }
 variable "aws_vpc_cidr_public_subnets" {
   description = "The public subnet CIDR blocks"
-  default     = ["10.0.1.0/24", "10.0.2.0/24"]
+  default     = ["10.1.1.0/24"]
+}
+variable "aws_vpc_primary_cidr_private_subnets" {
+  description = "The public subnet CIDR blocks"
+  default     = ["10.0.1.0/24", "10.0.2.0/24", "10.0.3.0/24"]
+}
+variable "aws_vpc_secondary_cidr_private_subnets" {
+  description = "The public subnet CIDR blocks"
+  default     = ["10.2.1.0/24", "10.2.2.0/24", "10.2.3.0/24"]
+}
+variable "aws_vpc_tertiary_cidr_private_subnets" {
+  description = "The public subnet CIDR blocks"
+  default     = ["10.3.1.0/24", "10.3.2.0/24", "10.3.3.0/24"]
 }
 variable "aws_vyos_amis" {
   description = "VyOS on AWS (Standard Support) - Pay-as-You-Go [1.2.x (HVM) with EBS Volume.]"
+  type        = map
   default = {
     "eu-north-1"     = "ami-055ce8ee0ef3c61fd"
     "ap-south-1"     = "ami-008114291e94efc69"
@@ -38,6 +59,7 @@ variable "aws_vyos_amis" {
 }
 variable "aws_ubuntu_amis" {
   description = "Linux/Unix, Ubuntu 20.04 - Focal | 64-bit (x86) Amazon Machine Image (AMI)"
+  type        = map
   default = {
     "eu-north-1"     = "ami-00888f2a5f9be4390"
     "ap-south-1"     = "ami-0443fb07ed652c341"
@@ -58,7 +80,27 @@ variable "aws_ubuntu_amis" {
     "us-west-2"      = "ami-02868af3c3df4b3aa"
   }
 }
-variable "aws_instance_type" {
-  description = "The AWS instance type to launch."
+# VyOS requires a medium or larger
+variable "aws_vyos_instance_type" {
+  description = "VYOS router AWS instance type to launch."
   default     = "t3.medium"
+}
+# The test images can be whatever we want
+variable "aws_ubuntu_instance_type" {
+  description = "Ubuntu AWS instance type to launch."
+  default     = "t3.nano"
+}
+resource "random_string" "bgp_password" {
+  length      = 18
+  min_upper   = 1
+  min_lower   = 1
+  min_numeric = 1
+  special     = false
+}
+resource "random_string" "ipsec_psk" {
+  length      = 32
+  min_upper   = 2
+  min_lower   = 2
+  min_numeric = 2
+  special     = false
 }

@@ -1,6 +1,7 @@
 # Router - NOT FOR RELEASE
 
-A test harness for deploying VyOS Stable Route and Ubuntu instances in AWS.
+A test harness for deploying a small cluster of VyOS _stable_ routers
+and Ubuntu testing instances in AWS.
 
 ## WHY?
 
@@ -21,7 +22,7 @@ VyOS AMI requires AWS Marketplace
 
 ```shell
 # TODO: set this up in ci
-./helpers/update-aws-ami.sh
+./external/update-aws-ami.sh
 ```
 
 ## AWS
@@ -35,7 +36,15 @@ VyOS AMI requires AWS Marketplace
 ### Notes
 
 ```shell
-alias tf-retry='tf destroy -auto-approve && tf apply -auto-approve'
+alias tf-retry='terraform destroy -auto-approve && terraform apply -auto-approve'
+```
+
+Sometimes terraform destroy fails.
+[gruntwork-io/cloud-nuke](https://github.com/gruntwork-io/cloud-nuke) is a very
+destructive command, but it stops the billing.
+
+```shell
+cloud-nuke aws --region us-west-2
 ```
 
 ### Help from

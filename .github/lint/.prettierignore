@@ -1,1 +1,5 @@
-talisman_reports/*
+./talisman_reports/*
+./.terraform/
+.terraform
+*.tfstate
+*.tfstate.*

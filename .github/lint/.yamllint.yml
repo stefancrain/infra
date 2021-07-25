@@ -5,6 +5,9 @@ yaml-files:
   - '.yamllint'
   - '.yamllint.yml'
 
+ignore: |
+  .terraform
+
 rules:
   braces:
     min-spaces-inside: 0
