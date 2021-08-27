@@ -115,7 +115,7 @@ data "template_cloudinit_config" "config" {
 module "vyos_instances" {
   depends_on             = [module.router_sg]
   source                 = "terraform-aws-modules/ec2-instance/aws"
-  version                = "2.19.0"
+  version                = "2.21.0"
   name                   = "${var.common_name}-vyos"
   instance_count         = 1
   ami                    = lookup(var.aws_vyos_amis, var.aws_region)
@@ -131,7 +131,7 @@ module "vyos_instances" {
 }
 module "ubuntu_instances" {
   source                 = "terraform-aws-modules/ec2-instance/aws"
-  version                = "2.19.0"
+  version                = "2.21.0"
   name                   = "${var.common_name}-ubuntu-test"
   instance_count         = 2
   ami                    = lookup(var.aws_ubuntu_amis, var.aws_region)
