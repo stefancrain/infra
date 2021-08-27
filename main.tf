@@ -12,10 +12,15 @@ terraform {
       source  = "hashicorp/template"
       version = "2.2.0"
     }
+    random = {
+      source  = "hashicorp/random"
+      version = "~> 3.1.0"
+    }
     http = {
       source  = "terraform-aws-modules/http"
       version = "2.4.1"
     }
+
   }
 }
 
@@ -98,8 +103,8 @@ data "template_file" "script" {
 # Render a multi-part cloud-init config making use of the part
 # above, and other source files
 data "template_cloudinit_config" "config" {
-  gzip          = true
-  base64_encode = true
+  gzip          = false
+  base64_encode = false
   part {
     filename     = "init.cfg"
     content_type = "text/cloud-config"
@@ -118,10 +123,7 @@ module "vyos_instances" {
   vpc_security_group_ids = [module.vpc.default_security_group_id, module.router_sg.security_group_id]
   subnet_id              = module.vpc.public_subnets[0]
   key_name               = module.key_pair.key_pair_key_name
-
-  # commands to test userdata
-  # https://docs.vyos.io/en/latest/automation/cloud-init.html
-  user_data_base64 = data.template_cloudinit_config.config.rendered
+  user_data              = data.template_cloudinit_config.config.rendered
   tags = {
     Terraform   = "true"
     CreatedDate = timestamp()

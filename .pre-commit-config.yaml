@@ -1,5 +1,12 @@
 ---
 repos:
+  - repo: local
+    hooks:
+      - id: sops-pre-commit
+        name: SOPS security test
+        entry: ./.github/security/sops-pre-commit.sh
+        language: script
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.0.1
     hooks:
@@ -40,10 +47,10 @@ repos:
           - --config
           - '.github/lint/.markdownlint.yml'
 
-  # - repo: https://github.com/thoughtworks/talisman
-  #   rev: v1.20.0
-  #   hooks:
-  #     - id: talisman-commit
+  - repo: https://github.com/thoughtworks/talisman
+    rev: v1.20.0
+    hooks:
+      - id: talisman-commit
 
   - repo: git://github.com/antonbabenko/pre-commit-terraform
     rev: v1.50.0
