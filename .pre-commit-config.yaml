@@ -48,7 +48,7 @@ repos:
           - '.github/lint/.markdownlint.yml'
 
   - repo: https://github.com/thoughtworks/talisman
-    rev: v1.20.0
+    rev: v1.22.0
     hooks:
       - id: talisman-commit
 
