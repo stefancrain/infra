@@ -1,4 +1,4 @@
-# Router - NOT FOR RELEASE
+# stefancrain/infra
 
 A test harness for deploying a small cluster of VyOS _stable_ routers
 and Ubuntu testing instances in AWS.
@@ -16,7 +16,8 @@ Using AWS Marketplace provided AMIs
 - [VyOS 1.2.x](https://aws.amazon.com/marketplace/pp/prodview-6i4irz5gqfkru).
 
 VyOS AMI requires AWS Marketplace
-[subscription](https://aws.amazon.com/marketplace/server/procurement?productId=9c9395f4-e891-4577-82e9-a6d5bccfb3c9) to function.
+[Subscription](https://aws.amazon.com/marketplace/server/procurement?productId=9c9395f4-e891-4577-82e9-a6d5bccfb3c9)
+to function.
 
 ### Updating AMIs
 

@@ -20,10 +20,18 @@ terraform {
       source  = "terraform-aws-modules/http"
       version = "2.4.1"
     }
-
+    sops = {
+      source  = "carlpett/sops"
+      version = "0.6.3"
+    }
   }
 }
 
+provider "sops" {}
+
+data "sops_file" "tf_secrets" {
+  source_file = "tf-secrets.sops.yaml"
+}
 # Configure the AWS Provider
 provider "aws" {
   region = var.aws_region

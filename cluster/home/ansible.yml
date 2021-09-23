@@ -1,0 +1,6 @@
+local:
+  hosts:
+    10.100.3.50:
+  vars:
+    ntp_server: d
+    proxy: e

@@ -1,5 +1,7 @@
 #!/bin/bash
-# Get an AMI for all regions
+# Generate a terraform VARS list of AWS AMIs in all AWS regions
+# Searches for VYOS & Ubuntu LTS
+# Doesn't update anything, you need to copy+paste
 
 declare -a REGIONS=($(aws ec2 describe-regions --output json | jq -r '.Regions[].RegionName'))
 

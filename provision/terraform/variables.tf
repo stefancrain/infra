@@ -7,10 +7,6 @@ variable "aws_region" {
   default     = "us-west-2"
 }
 
-locals {
-  db_creds = yamldecode(sops_decrypt_file(("secrets/db-creds.yml")))
-}
-
 variable "aws_vpc_primary_cidr_block" {
   description = "First CIDR block to use for the AWS VPC."
   default     = "10.0.0.0/16"
