@@ -1,0 +1,65 @@
+---
+- name: Lockdown those linux environments
+  hosts: all
+  become: true
+  pre_tasks:
+    - name: Update all packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: dist
+        force: yes
+    - name: "Add authorized keys"
+      ansible.posix.authorized_key:
+        user: "{{ ansible_user }}"
+        key: "{{ item }}"
+      loop: "{{ ssh_authorized_keys }}"
+      when:
+        - ssh_authorized_keys is defined
+        - ssh_authorized_keys is iterable
+        - ssh_authorized_keys | length > 0
+
+  vars:
+    base_timezone: America/New_York
+  collections:
+    - devsec.hardening
+  roles:
+  - role: ssh_hardening
+    vars:
+      sftp_enabled: true
+      network_ipv6_enable: false 
+      ssh_listen_to: ['0.0.0.0'] 
+      ssh_print_pam_motd: true
+      ssh_print_motd: true
+      ssh_banner: true
+      ssh_print_debian_banner: true
+      ssh_max_auth_retries: 1
+      ssh_server_ports: ["22"]
+      ssh_print_last_log: false
+      ssh_client_alive_interval: 300
+      ssh_client_alive_count: 2
+      ssh_client_password_login: true
+  - role: os_hardening
+    vars:
+      sysctl_overwrite:
+        net.ipv4.ip_forward: 1
+      hidepid_option: 0
+  
+  tasks: 
+  - name: "ssh : configure network banner"
+    template:
+      src: ssh/network-banner.j2
+      dest: "{{ item }}"
+      mode: 0600
+      owner: root
+      group: root
+    with_items:
+      - /etc/ssh/banner.txt
+      - /etc/issue.net
+
+  - name: "ssh : update local banners"
+    template:
+      src: ssh/local-banner.j2
+      dest: /etc/issue
+      mode: 0600
+      owner: root
+      group: root

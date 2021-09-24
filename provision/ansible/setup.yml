@@ -1,0 +1,5 @@
+---
+- name: Yeet K8s those linux environments
+  hosts: all
+  become: true
+  TODO: FROM @ONEDROP

@@ -1,6 +1,7 @@
-local:
+home:
   hosts:
     10.100.3.50:
   vars:
     ntp_server: d
     proxy: e
+    ssh_server_ports: ["4312"]

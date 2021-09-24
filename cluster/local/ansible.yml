@@ -1,0 +1,47 @@
+local:
+  hosts:
+    localhost:
+  vars:
+    ansible_host: 127.0.0.1
+    ansible_port: 8022
+    ansible_user: root
+    ansible_ssh_pass: "JMJhZy1Hxg6bFuHK5JYC6Xk9d3MBN7DK" # @SPARKS
+    ssh_permit_root_login: 'yes'
+    ssh_authorized_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDw3GYfw0I6GVfs1RnKe0tghVvMgn11iFU5sQzDL6Ow9 Stefan personal"
+    sysctl_config:
+      net.ipv4.ip_forward: 0
+      net.ipv6.conf.all.forwarding: 0
+      net.ipv6.conf.all.accept_ra: 0
+      net.ipv6.conf.default.accept_ra: 0
+      net.ipv4.conf.all.rp_filter: 1
+      net.ipv4.conf.default.rp_filter: 1
+      net.ipv4.icmp_echo_ignore_broadcasts: 1
+      net.ipv4.icmp_ignore_bogus_error_responses: 1
+      net.ipv4.icmp_ratelimit: 100
+      net.ipv4.icmp_ratemask: 88089
+      net.ipv4.conf.all.arp_ignore: 1
+      net.ipv4.conf.all.arp_announce: 2
+      net.ipv4.conf.all.shared_media: 1
+      net.ipv4.conf.default.shared_media: 1
+      net.ipv4.conf.all.accept_source_route: 0
+      net.ipv4.conf.default.accept_source_route: 0
+      net.ipv4.conf.default.accept_redirects: 0
+      net.ipv4.conf.all.accept_redirects: 0
+      net.ipv4.conf.all.secure_redirects: 0
+      net.ipv4.conf.default.secure_redirects: 0
+      net.ipv6.conf.default.accept_redirects: 0
+      net.ipv6.conf.all.accept_redirects: 0
+      net.ipv4.conf.all.send_redirects: 0
+      net.ipv4.conf.default.send_redirects: 0
+      net.ipv4.conf.all.log_martians: 1
+      net.ipv6.conf.default.router_solicitations: 0
+      net.ipv6.conf.default.accept_ra_rtr_pref: 0
+      net.ipv6.conf.default.accept_ra_pinfo: 0
+      net.ipv6.conf.default.accept_ra_defrtr: 0
+      net.ipv6.conf.default.conf: 0
+      net.ipv6.conf.default.dad_transmits: 0
+      net.ipv6.conf.default.max_addresses: 1
+      kernel.sysrq: 0
+      fs.suid_dumpable: 0
+      kernel.randomize_va_space: 2

@@ -7,6 +7,8 @@ roles:
     name: mrlesmithjr.zfs
     version: b80e84d6938eb7730faeffc7ff7d8aa06ad5bef7
 collections:
+  - name: devsec.hardening
+    version: '7.10.0'
   - name: community.docker
     version: '1.9.1'
   - name: community.general
