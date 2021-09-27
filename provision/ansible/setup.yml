@@ -2,4 +2,40 @@
 - name: Yeet K8s those linux environments
   hosts: all
   become: true
-  TODO: FROM @ONEDROP
+  tasks:
+
+    - name: check latest chezmoi
+      block:
+        - name: Find latest releases
+          uri:
+            url: https://api.github.com/repos/twpayne/chezmoi/releases/latest
+            return_content: true
+          register: chezmoi_release_output
+        - name: Set version
+          set_fact:
+            chezmoi_version: "{{ chezmoi_release_output.json.tag_name }}"
+
+    - name: Check if chezmoi is already installed
+      command: chezmoi --version
+      register: chezmoi_version_output
+      ignore_errors: yes
+      changed_when: false
+
+    - name: Determine chezmoi version and other variables
+      set_fact:
+        chezmoi_install: "{{ chezmoi_version_output.rc == 2 or not(chezmoi_version in chezmoi_version_output.stdout) }}"
+        chezmoi_version_filtered: "{{ chezmoi_version | regex_replace('^v', '') }}"
+
+    - name: "Install chezmoi {{ chezmoi_version }} (deb)"
+      apt:
+        deb: "https://github.com/twpayne/chezmoi/releases/download/{{ chezmoi_version }}/chezmoi_{{ chezmoi_version_filtered }}_linux_amd64.deb"
+      when: 
+        - ansible_architecture == 'x86_64'
+
+    - name: Install dotfiles
+      ansible.builtin.shell:
+        cmd: chezmoi init --one-shot --source ~/Code/.dotfiles stefancrain
+
+# https://github.com/twpayne/chezmoi/releases/download/v2.5.0/chezmoi_2.5.0_linux_arm64.deb
+# https://github.com/twpayne/chezmoi/releases/download/v2.5.0/chezmoi-2.5.0-x86_64.rpm
+# https://github.com/twpayne/chezmoi/releases/download/v2.5.0/chezmoi_2.5.0_linux_x86_64.deb
